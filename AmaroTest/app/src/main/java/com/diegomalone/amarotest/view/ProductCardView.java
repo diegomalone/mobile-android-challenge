@@ -22,6 +22,12 @@ public class ProductCardView extends CardView {
     @BindView(R.id.productImage)
     ImageView productImage;
 
+    @BindView(R.id.productPrice)
+    TextView productPrice;
+
+    @BindView(R.id.productInstallments)
+    TextView productInstallments;
+
     private Product product;
 
     public ProductCardView(Context context) {
@@ -43,6 +49,8 @@ public class ProductCardView extends CardView {
         this.product = product;
 
         productName.setText(product.getName());
+        productPrice.setText(product.getActualPrice());
+        productInstallments.setText(product.getInstallments());
 
         Glide.with(getContext())
                 .load(product.getImageUrl())

@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface ProductListContract {
 
+    int PRODUCT_LIST_SPAN_COUNT = 2;
+
     interface View {
         void showLoading(Boolean isVisible);
         void showError();

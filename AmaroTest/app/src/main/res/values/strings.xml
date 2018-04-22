@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Amaro</string>
+
+    <string name="unknown_error">Ocorreu um erro inesperado</string>
 </resources>
