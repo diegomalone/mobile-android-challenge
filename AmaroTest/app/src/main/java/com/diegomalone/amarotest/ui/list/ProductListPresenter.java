@@ -1,14 +1,18 @@
 package com.diegomalone.amarotest.ui.list;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 
 import com.diegomalone.amarotest.model.Product;
 import com.diegomalone.amarotest.network.ProductDataSource;
 import com.diegomalone.amarotest.network.model.ProductResponse;
+import com.diegomalone.amarotest.ui.detail.ProductDetailsActivity;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
+
+import static com.diegomalone.amarotest.ui.detail.ProductDetailsContract.PRODUCT_EXTRA;
 
 public class ProductListPresenter implements ProductListContract.Presenter {
 
@@ -65,6 +69,11 @@ public class ProductListPresenter implements ProductListContract.Presenter {
 
     @Override
     public void productClicked(Product product) {
-        // TODO
+        if (view != null) {
+            Intent intent = new Intent(view.getViewActivity(), ProductDetailsActivity.class);
+            intent.putExtra(PRODUCT_EXTRA, product);
+
+            view.getViewActivity().startActivity(intent);
+        }
     }
 }

@@ -56,4 +56,8 @@ public class ProductCardView extends CardView {
                 .load(product.getImageUrl())
                 .into(productImage);
     }
+
+    public Product getProduct() {
+        return product;
+    }
 }

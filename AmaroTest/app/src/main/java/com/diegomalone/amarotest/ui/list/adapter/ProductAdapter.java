@@ -1,6 +1,7 @@
 package com.diegomalone.amarotest.ui.list.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,13 @@ import java.util.List;
 public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
+    private View.OnClickListener onClickListener;
 
     private List<Product> productList = new ArrayList<>();
 
-    public ProductAdapter(Context context) {
+    public ProductAdapter(Context context, View.OnClickListener onClickListener) {
         this.mContext = context;
+        this.onClickListener = onClickListener;
     }
 
     public void setProductList(List<Product> productList) {
@@ -26,7 +29,7 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         ProductCardView productCardView = new ProductCardView(mContext);
 
         RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -42,8 +45,9 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder productViewHolder, int i) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder productViewHolder, int i) {
         ((ProductCardView) productViewHolder.itemView).setProduct(productList.get(i));
+        productViewHolder.itemView.setOnClickListener(onClickListener);
     }
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {

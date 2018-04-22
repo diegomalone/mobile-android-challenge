@@ -1,5 +1,6 @@
 package com.diegomalone.amarotest.ui.list;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -7,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.View;
 
 import com.diegomalone.amarotest.BuildConfig;
 import com.diegomalone.amarotest.R;
@@ -15,6 +17,7 @@ import com.diegomalone.amarotest.model.Product;
 import com.diegomalone.amarotest.network.product.ProductNetworkService;
 import com.diegomalone.amarotest.network.product.ProductRestClient;
 import com.diegomalone.amarotest.ui.list.adapter.ProductAdapter;
+import com.diegomalone.amarotest.view.ProductCardView;
 import com.diegomalone.amarotest.view.SpacingItemDecorator;
 
 import java.util.List;
@@ -45,7 +48,7 @@ public class ProductListActivity extends BaseActivity implements ProductListCont
         setContentView(R.layout.activity_product_list);
         ButterKnife.bind(this);
 
-        setupToolbar();
+        setupToolbar(false);
 
         createPresenter();
 
@@ -84,12 +87,24 @@ public class ProductListActivity extends BaseActivity implements ProductListCont
             }
         });
 
-        productAdapter = new ProductAdapter(this);
+        productAdapter = new ProductAdapter(this, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (presenter != null && v instanceof ProductCardView) {
+                    presenter.productClicked(((ProductCardView) v).getProduct());
+                }
+            }
+        });
 
         recyclerView.setAdapter(productAdapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(PRODUCT_LIST_SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.addItemDecoration(new SpacingItemDecorator(((int) getResources().getDimension(R.dimen.small_margin))));
+    }
+
+    @Override
+    public Activity getViewActivity() {
+        return this;
     }
 
     @Override
