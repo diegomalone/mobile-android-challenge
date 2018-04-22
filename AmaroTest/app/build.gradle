@@ -19,11 +19,11 @@ android {
         def API_URL = "API_URL"
 
         release {
-            buildConfigField STRING, API_URL, "\"http://www.mocky.io/v2\""
+            buildConfigField STRING, API_URL, "\"http://www.mocky.io/v2/\""
         }
 
         debug {
-            buildConfigField STRING, API_URL, "\"http://www.mocky.io/v2\""
+            buildConfigField STRING, API_URL, "\"http://www.mocky.io/v2/\""
         }
     }
 
