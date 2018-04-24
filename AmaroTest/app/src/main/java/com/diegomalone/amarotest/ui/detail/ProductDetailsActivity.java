@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.diegomalone.amarotest.R;
 import com.diegomalone.amarotest.base.BaseActivity;
 import com.diegomalone.amarotest.model.Product;
@@ -19,6 +22,18 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
     @BindView(R.id.constraintLayout)
     ConstraintLayout constraintLayout;
 
+    @BindView(R.id.productName)
+    TextView productName;
+
+    @BindView(R.id.productImage)
+    ImageView productImage;
+
+    @BindView(R.id.productPrice)
+    TextView productPrice;
+
+    @BindView(R.id.productInstallments)
+    TextView productInstallments;
+
     private ProductDetailsContract.Presenter presenter;
 
     @Override
@@ -30,7 +45,6 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
         setupToolbar(true);
 
         createPresenter();
-        processIntentParameters();
 
         configureUI();
     }
@@ -55,6 +69,8 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
         if (presenter != null) {
             presenter.attachView(this);
         }
+
+        processIntentParameters();
     }
 
     @Override
@@ -71,6 +87,12 @@ public class ProductDetailsActivity extends BaseActivity implements ProductDetai
 
     @Override
     public void showProduct(Product product) {
-        // TODO
+        productName.setText(product.getName());
+        productPrice.setText(product.getActualPrice());
+        productInstallments.setText(product.getInstallments());
+
+        Glide.with(this)
+                .load(product.getImageUrl())
+                .into(productImage);
     }
 }
